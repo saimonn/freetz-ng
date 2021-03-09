@@ -42,16 +42,19 @@ jobs:
             libusb-dev unzip intltool libacl1-dev libcap-dev libc6-dev-i386 \
             lib32ncurses5-dev gcc-multilib lib32stdc++6 libglib2.0-dev sqlite3:i386
           echo apt-get installed with return code: $?
-            
+
       - name: make olddefconfig
         run: make olddefconfig
-        
+
       - name: make
         run: make
-        
+
       - name: sha1sum images/latest.image
         run: sha1sum images/latest.image > images/latest.image.sha1sum
-        
+
+      - name: sha512sum images/latest.image
+        run: sha1sum images/latest.image > images/latest.image.sha512sum
+
       - uses: actions/upload-artifact@v1
         with:
           name: latest.image
@@ -61,3 +64,8 @@ jobs:
         with:
           name: latest.image.sha1sum
           path: images/latest.image.sha1sum
+
+      - uses: actions/upload-artifact@v1
+        with:
+          name: latest.image.sha512sum
+          path: images/latest.image.sha512sum
